@@ -2,7 +2,8 @@ import random
 import pandas as pd
 from functions import *
 from shapes import *
-from PIL import Image, ImageDraw
+from gradients import *
+from PIL import Image
 
 
 if __name__ == "__main__":
@@ -25,7 +26,7 @@ if __name__ == "__main__":
         start_color = (95, 44, 130)
         end_color = (73, 160, 157)
 
-        create_gradient(image, img_width, img_height, start_color, end_color)
+        create_simple_gradient(image, img_width, img_height, start_color, end_color)
 
         for i in range(len(vals_co2)):
             try:
