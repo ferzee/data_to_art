@@ -3,7 +3,6 @@ Includes all helper functions
 """
 
 
-
 def linear_map(value, from_low, from_high, to_low, to_high):
     """
     Linearly maps a value from one range to another.
