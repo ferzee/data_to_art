@@ -40,7 +40,7 @@ def convert_hex_to_rgb(hex_color: str):
     return rgb_color
 
 
-def convert_hex_to_rgb(rgb_color: tuple):
+def convert_rgb_to_hex(rgb_color: tuple):
     """
     Converts a hex_color value to a rgb tuple.
 
@@ -52,7 +52,7 @@ def convert_hex_to_rgb(rgb_color: tuple):
     """
     
     if not isinstance(rgb_color, tuple):
-        raise ValueError("rgb_color is not an int")
+        raise ValueError("rgb_color is not a tuple")
     
     hex_color = "#{:02X}{:02X}{:02X}".format(rgb_color[0], rgb_color[1], rgb_color[2])
     
