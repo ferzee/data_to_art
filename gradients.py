@@ -16,6 +16,7 @@ def create_complex_gradient(image, img_width: int, img_height: int, colors: list
         angle (int, optional): the angle of the gradient (default is 0, horizontal).
     """
 
+    # Check for type validity
     if not isinstance(img_width, int):
         raise ValueError("img_width is not an int")
 
@@ -65,6 +66,7 @@ def create_horizontal_gradient(image, img_width: int, img_height: int, start_col
             end_color (tuple): the ending color (right color).
     """
 
+    # Check for type validity
     if not isinstance(img_width, int):
         raise ValueError("img_width is not an int")
     
@@ -98,6 +100,7 @@ def create_vertical_gradient(image, img_width: int, img_height: int, start_color
         end_color (tuple): the ending color (bottom color).
     """
 
+    # Check for type validity
     if not isinstance(img_height, int):
         raise ValueError("img_height is not an int")
 

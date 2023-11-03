@@ -3,20 +3,37 @@ Includes all helper functions
 """
 
 
-def linear_map(value, from_low, from_high, to_low, to_high):
+def linear_map(value: (int, float), from_low: (int, float), from_high: (int, float),
+               to_low: (int, float), to_high: (int, float)):
     """
     Linearly maps a value from one range to another.
 
         Args:
-            value (float): The value to be mapped.
-            from_low (float): The lower bound of the original range.
-            from_high (float): The upper bound of the original range.
-            to_low (float): The lower bound of the target range.
-            to_high (float): The upper bound of the target range.
+            value (int, float): The value to be mapped.
+            from_low (int, float): The lower bound of the original range.
+            from_high (int, float): The upper bound of the original range.
+            to_low (int, float): The lower bound of the target range.
+            to_high (int, float): The upper bound of the target range.
 
         Returns:
             float: The mapped value in the target range.
     """
+
+    # Check for type validity
+    if not isinstance(value, (int, float)):
+        raise ValueError("value should be an int or a float")
+
+    if not isinstance(from_low, (int, float)):
+        raise ValueError("from_low should be an int or a float")
+
+    if not isinstance(from_high, (int, float)):
+        raise ValueError("from_high should be an int or a float")
+
+    if not isinstance(to_low, (int, float)):
+        raise ValueError("to_low should be an int or a float")
+
+    if not isinstance(to_high, (int, float)):
+        raise ValueError("to_high should be an int or a float")
 
     return (value - from_low) * (to_high - to_low) / (from_high - from_low) + to_low
 
@@ -32,6 +49,7 @@ def convert_hex_to_rgb(hex_color: str):
             rgb_color (float): The converted rgb value.
     """
 
+    # Check for type validity
     if not isinstance(hex_color, str):
         raise ValueError("hex_color is not a string")
 
@@ -50,7 +68,8 @@ def convert_rgb_to_hex(rgb_color: tuple):
         Returns:
             hex_color (string): The converted hex value.
     """
-    
+
+    # Check for type validity
     if not isinstance(rgb_color, tuple):
         raise ValueError("rgb_color is not a tuple")
     

@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
             data_set.append((x1, x2))
 
-        draw_polygon_with_rounded_edges(image=image, data_set=data_set, line_color=line_color, line_width=line_width, close=False, rounded=True)
+        draw_polygon_from_data_set(image=image, data_set=data_set, line_color=line_color, line_width=line_width, close=False, rounded=True)
 
         file_name = f'chique_{iteration}.png'
         image.save(file_name)

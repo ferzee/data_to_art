@@ -2,7 +2,8 @@ from PIL import ImageDraw
 import math
 
 
-def draw_hexagon(image, center_x: int, center_y: int, size: int, outline_color: tuple, angle: float = 0.0, width: int = 1):
+def draw_hexagon(image, center_x: int, center_y: int, size: int,
+                 outline_color: tuple, angle: (int, float) = 0.0, width: int = 1):
     """
     Draws a hexagon.
 
@@ -16,7 +17,7 @@ def draw_hexagon(image, center_x: int, center_y: int, size: int, outline_color: 
             width (int, optional): The thickness of the line (default is 1).
     """
 
-    # Check if the right types are being used
+    # Check for type validity
     if not isinstance(center_x, int):
         raise ValueError("center_x is not an int")
     
@@ -29,7 +30,7 @@ def draw_hexagon(image, center_x: int, center_y: int, size: int, outline_color: 
     if not isinstance(angle, (int, float)):
         raise ValueError("angle is not a numeric value")
     
-    if not isinstance(width, (int)):
+    if not isinstance(width, int):
         raise ValueError("angle is not an int")
 
     draw = ImageDraw.Draw(image)
@@ -62,6 +63,7 @@ def draw_line(image, x1, y1, x2, y2, line_color, width: int):
         width (int): line thickness.
     """
 
+    # Check for type validity
     if not isinstance(x1, int) or not isinstance(y1, int) or not isinstance(x2, int) or not isinstance(y2, int):
         raise ValueError("Coordinates should be integers.")
 
@@ -72,45 +74,39 @@ def draw_line(image, x1, y1, x2, y2, line_color, width: int):
         raise ValueError("Width should be an integer.")
 
     draw = ImageDraw.Draw(image)
+
+    # Draw a line segment
     draw.line([(x1, y1), (x2, y2)], fill=line_color, width=width)
 
 
-def draw_polygon_from_data_set(image, data_set, line_color, width, close=True):
+def draw_polygon_from_data_set(image, data_set: list, line_color: tuple, line_width: int, close=True, rounded=True):
     """
     Draws a polygon on the image using x1 and x2 coordinates from a dataset.
 
     Args:
         image (PIL.Image.Image): The image on which to draw the polygon.
-        dataset (list of tuples): A list of (x1, x2) coordinate pairs.
+        data_set (list of tuples): A list of (x1, x2) coordinate pairs.
         line_color (tuple): The color of the polygon outline (R, G, B).
-        close_polygon (bool, optional): Whether to close the polygon by connecting the first and last points (default is True).
+        line_width (int): The width of the lines connecting the circles.
+        close (bool, optional): Whether to close the polygon by connecting the first and last points (default is True).
+        rounded (bool, option): whether the lines should be rendered with rounded edges (default is True).
     """
 
+    # Check for type validity
     if not isinstance(data_set, list) or not all(isinstance(point, tuple) and len(point) == 2 for point in data_set):
         raise ValueError("Dataset should be a list of (x1, x2) coordinate pairs.")
 
     if not isinstance(line_color, tuple) or len(line_color) != 3:
         raise ValueError("line_color should be a tuple of three values (R, G, B).")
 
-    draw = ImageDraw.Draw(image)
-    points = [(x1, x2) for x1, x2 in data_set]
-
-    if close and len(points) >= 3:
-        points.append(points[0])
-
-    draw.polygon(points, outline=line_color, width=width)
-
-
-def draw_polygon_with_rounded_edges(image, data_set, line_color, line_width, close=True, rounded=True):
-    if not isinstance(data_set, list) or not all(isinstance(point, tuple) and len(point) == 2 for point in data_set):
-        raise ValueError("Dataset should be a list of (x1, x2) coordinate pairs.")
-
-    if not isinstance(line_color, tuple) or len(line_color) != 3:
-        raise ValueError("line_color should be a tuple of three values (R, G, B).")
+    if not isinstance(line_width, int):
+        raise ValueError("line_width should be an int.")
 
     draw = ImageDraw.Draw(image)
+
     points = [(x1, x2) for x1, x2 in data_set]
 
+    # Makes the circles slightly smaller than the line width to make it look more natural.
     circle_size = line_width - (line_width / 10)
 
     if close and len(points) >= 3:
@@ -123,7 +119,9 @@ def draw_polygon_with_rounded_edges(image, data_set, line_color, line_width, clo
         # Draw a line segment
         draw.line([x1, y1, x2, y2], fill=line_color, width=line_width)
 
-        if rounded:            draw.ellipse((x1 - circle_size / 2, y1 - circle_size / 2, x1 + circle_size / 2, y1 + circle_size / 2), fill=line_color)
+        # Adds circles at the end of each line to simulate rounding.
+        if rounded:
+            draw.ellipse((x1 - circle_size / 2, y1 - circle_size / 2, x1 + circle_size / 2, y1 + circle_size / 2), fill=line_color)
             draw.ellipse((x2 - circle_size / 2, y2 - circle_size / 2, x2 + circle_size / 2, y2 + circle_size / 2), fill=line_color)
 
     # Connect the last point to the first point with a line
@@ -131,37 +129,3 @@ def draw_polygon_with_rounded_edges(image, data_set, line_color, line_width, clo
         x1, y1 = points[-1]
         x2, y2 = points[0]
         draw.line([x1, y1, x2, y2], fill=line_color, width=line_width)
-
-
-def draw_polygon_with_circles(image, width: int, circle_size: int, data_set, line_color, close=True):
-    """
-    Draws a polygon on the image using x1 and x2 coordinates from a dataset.
-
-    Args:
-        width (int): The width of the lines connecting the circles.
-        image (PIL.Image.Image): The image on which to draw the polygon.
-        circle_size (int): The size of the circle.
-        data_set (list of tuples): A list of (x1, x2) coordinate pairs.
-        line_color (tuple): The color of the polygon outline (R, G, B).
-        close (bool, optional): Whether to close the polygon by connecting the first and last points (default is True).
-    """
-
-    if not isinstance(data_set, list) or not all(isinstance(point, tuple) and len(point) == 2 for point in data_set):
-        raise ValueError("Dataset should be a list of (x1, x2) coordinate pairs.")
-
-    if not isinstance(line_color, tuple) or len(line_color) != 3:
-        raise ValueError("line_color should be a tuple of three values (R, G, B).")
-
-    draw = ImageDraw.Draw(image)
-
-    if close and len(data_set) >= 3:
-        data_set.append(data_set[0])
-
-    draw.polygon(data_set, outline=line_color, width=width)
-
-    fill_color = (255, 255, 255)
-
-    for val in data_set:
-        x = val[0] - (circle_size / 2)
-        y = val[1] - (circle_size / 2)
-        draw.ellipse((x, y, x + circle_size, y + circle_size), fill=fill_color, outline=None, width=width)

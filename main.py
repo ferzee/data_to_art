@@ -22,12 +22,12 @@ if __name__ == "__main__":
     image = Image.new('RGB', (img_width, img_height))
 
     # Creates the gradient for the background
-    start_color = convert_hex_to_rgb("#649173")
-    end_color = convert_hex_to_rgb("#DBD5A4")
+    end_color = convert_hex_to_rgb("#649173")
+    start_color = convert_hex_to_rgb("#DBD5A4")
 
     line_color = (255, 255, 255)
 
-    create_horizontal_gradient(image, img_width, img_height, start_color, end_color)
+    create_vertical_gradient(image, img_width, img_height, start_color, end_color)
 
     for i in range(len(val1)):
         x = linear_map(val1[i], min(val1), max(val1), margin, img_width - margin)
@@ -46,6 +46,6 @@ if __name__ == "__main__":
             image=image
         )
 
-    file_name = f'housing.png'
+    file_name = f'housing/housing.png'
     image.save(file_name)
     print(f'Saved {file_name}')
