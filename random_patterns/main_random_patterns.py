@@ -5,7 +5,7 @@ from functions import *
 
 canvas_size = (3000, 3000)
 cell_size = 50
-iterations = 5
+iterations = 100
 
 colors = [
     '#F875AA',

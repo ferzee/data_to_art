@@ -5,7 +5,7 @@ from gradients import *
 from PIL import Image
 
 if __name__ == "__main__":
-    dataset = pd.read_csv('housing/housing.csv')
+    dataset = pd.read_csv('housing.csv')
 
     df = pd.DataFrame(dataset)
 
@@ -46,6 +46,6 @@ if __name__ == "__main__":
             image=image
         )
 
-    file_name = f'housing/housing.png'
+    file_name = f'housing.png'
     image.save(file_name)
     print(f'Saved {file_name}')

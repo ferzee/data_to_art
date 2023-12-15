@@ -1,4 +1,4 @@
-from PIL import ImageDraw
+from PIL import ImageDraw, Image
 import math
 
 
@@ -129,3 +129,38 @@ def draw_polygon_from_data_set(image, data_set: list, line_color: tuple, line_wi
         x1, y1 = points[-1]
         x2, y2 = points[0]
         draw.line([x1, y1, x2, y2], fill=line_color, width=line_width)
+
+
+def generate_parametric_pattern(image, width, height, parameter1, parameter2, file_name, radius):
+    # Create a blank image with a white background
+    draw = ImageDraw.Draw(image)
+
+    # Define the parametric function for the pattern
+    def parametric_function(u, v):
+        x = math.sin(u) + parameter1 * math.cos(v)
+        y = math.cos(u) + parameter2 * math.sin(v)
+        return x, y
+
+    # Set the range of parameters (adjust as needed)
+    u_range = (0, 2 * math.pi, 0.1)
+    v_range = (0, 2 * math.pi, 0.1)
+
+    # Iterate through the parameter values and draw ellipses on the image
+    for u in range(int((u_range[1] - u_range[0]) / u_range[2])):
+        for v in range(int((v_range[1] - v_range[0]) / v_range[2])):
+            u_val = u_range[0] + u * u_range[2]
+            v_val = v_range[0] + v * v_range[2]
+            x, y = parametric_function(u_val, v_val)
+
+            # Map the parametric coordinates to pixel coordinates
+            pixel_x = int((x + 1) * 0.5 * width)
+            pixel_y = int((y + 1) * 0.5 * height)
+
+            # Draw an ellipse at the calculated position
+            ellipse_radius = radius  # Adjust the radius of the ellipse
+            draw.ellipse((pixel_x - ellipse_radius, pixel_y - ellipse_radius,
+                          pixel_x + ellipse_radius, pixel_y + ellipse_radius),
+                         fill="white")
+
+    # Save the image
+    image.save(file_name)
