@@ -76,5 +76,3 @@ def convert_rgb_to_hex(rgb_color: tuple):
     hex_color = "#{:02X}{:02X}{:02X}".format(rgb_color[0], rgb_color[1], rgb_color[2])
     
     return hex_color
-
-
