@@ -127,7 +127,7 @@ def calc_bounding_box_from_center(xy, circle_width, offset=0):
         (xy[0] - circle_width / 2) - offset,
         (xy[1] - circle_width / 2) - offset,
         (xy[0] + circle_width / 2) + offset,
-         (xy[1] + circle_width / 2 + offset)
+        (xy[1] + circle_width / 2 + offset)
     )
 
     return bounding_box
@@ -162,6 +162,3 @@ def create_random_num_str(length):
         result_str += num
 
     return int(result_str)
-
-
-

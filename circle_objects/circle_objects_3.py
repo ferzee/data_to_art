@@ -7,8 +7,8 @@ for file in range(5):
     IMG_WIDTH = 3000
     MARGIN = 300
 
-    BG_COLOR = functions.convert_hex_to_rgb('#FFFFFF')
-    LINE_COLOR = functions.convert_hex_to_rgb('#000000')
+    BG_COLOR = functions.convert_hex_to_rgb('#ff8b94')
+    LINE_COLOR = functions.convert_hex_to_rgb('#FFFFFF')
 
     image = Image.new('RGB', (IMG_WIDTH, IMG_HEIGHT), BG_COLOR)
 
@@ -30,7 +30,7 @@ for file in range(5):
 
     draw.ellipse(xy=bounding_box, fill=None, outline=LINE_COLOR, width=30)
 
-    num_of_circles = randint(4, 20)
+    num_of_circles = randint(4, 24)
 
     part_size = 360 / num_of_circles
 
@@ -49,6 +49,6 @@ for file in range(5):
 
         angle += part_size
 
-    # image.save(f'{num_str}.png')
+    image.save(f'symmetrical_circles_{file}.png')
 
-    image.show()
+    #image.show()
